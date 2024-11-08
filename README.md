@@ -16,7 +16,7 @@ CHIP-8是一种解释型汇编语言，由Joseph Weisbecker在他的1802微处�
 
 - 声音计时器（Sound Timer，`ST`），8 bit，用于控制声音输出
 
-- 索引寄存器（index register， `I` ），16 bit，用来保存内存地址，与涉及内存操作的多个操作码一起使用。
+- 索引寄存器（Index Register， `I` ），16 bit，用来保存内存地址，与涉及内存操作的多个操作码一起使用。
 
 - 程序计数器（Program Counter，`PC`），16 bit
 
