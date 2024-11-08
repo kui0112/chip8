@@ -20,13 +20,15 @@ App::App(QWidget *parent) : QWidget{parent} {
     connect(inter, &Chip8Interpreter::draw, this, &App::draw);
     connect(inter, &Chip8Interpreter::beep, this, &App::beep);
 
-
-    std::cout << "Loading ROM." << std::endl;
-    // inter->Load("E:\\Temp\\Temp\\IBM Logo.ch8");
-    inter->Load("E:\\Temp\\Temp\\Breakout (Brix hack) [David Winter, 1997].ch8");
-    std::cout << "ROM Loaded." << std::endl;
-
-    inter->start();
+    std::cout << "loading rom." << std::endl;
+    // inter->Load("..\\rom\\IBM Logo.ch8");
+    bool res = inter->Load("..\\rom\\Breakout (Brix hack) [David Winter, 1997].ch8");
+    if (res) {
+        std::cout << "rom loaded." << std::endl;
+        inter->start();
+    } else {
+        std::cout << "fail to load rom." << std::endl;
+    }
 }
 
 void App::closeEvent(QCloseEvent *event) {

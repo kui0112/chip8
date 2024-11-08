@@ -120,7 +120,7 @@ private:
 public:
     explicit Chip8Interpreter(QObject *parent = nullptr);
 
-    void Load(std::string file);
+    bool Load(const std::string& file);
 
     // translate opcode into Instruction object.
     std::shared_ptr<Instruction> ParseInstruction(uint16_t opcode);

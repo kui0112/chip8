@@ -147,14 +147,19 @@ void Chip8Interpreter::run() {
     exec();
 }
 
-void Chip8Interpreter::Load(std::string file) {
+bool Chip8Interpreter::Load(const std::string& file) {
     std::ifstream stream(file, std::ios::binary | std::ios::in);
+    if (!stream.is_open()) {
+        return false;
+    }
     char c;
     for (int i = 0x200; stream.get(c); i++) {
         RAM[i] = c;
     }
+    stream.close();
     PC = 0x200;
     I = 0x200;
+    return true;
 }
 
 std::shared_ptr<Instruction> Chip8Interpreter::ParseInstruction(uint16_t opcode) {
