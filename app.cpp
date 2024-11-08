@@ -8,8 +8,7 @@
 #include <iostream>
 
 
-App::App(QWidget *parent) : QWidget{parent}
-{
+App::App(QWidget *parent) : QWidget{parent} {
     setFixedSize(canvasWidth, canvasHeight);
 
     pixmap = QPixmap(canvasWidth, canvasHeight);
@@ -34,17 +33,17 @@ void App::closeEvent(QCloseEvent *event) {
     inter->exit();
 }
 
-void App::keyPressEvent(QKeyEvent* event) {
+void App::keyPressEvent(QKeyEvent *event) {
     auto k = event->key();
-    if(keyMap.find(k) != keyMap.end()) {
+    if (keyMap.find(k) != keyMap.end()) {
         emit KeyDown(keyMap[k]);
         std::cout << "key pressed: " << k << std::endl;
     }
 }
 
-void App::keyReleaseEvent(QKeyEvent* event) {
+void App::keyReleaseEvent(QKeyEvent *event) {
     auto k = event->key();
-    if(keyMap.find(k) != keyMap.end()) {
+    if (keyMap.find(k) != keyMap.end()) {
         emit KeyUp(keyMap[k]);
         // std::cout << "key released: " << k << std::endl;
     }
@@ -68,7 +67,7 @@ void App::draw(std::array<std::array<bool, Chip8Interpreter::screenWidth>, Chip8
             } else {
                 color = Qt::white;
             }
-            QRect rect((y*10) % canvasWidth, (x*10) % canvasHeight, 10, 10);
+            QRect rect((y * 10) % canvasWidth, (x * 10) % canvasHeight, 10, 10);
             painter.fillRect(rect, color);
         }
     }

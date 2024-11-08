@@ -13,24 +13,24 @@
 #include <QTimer>
 
 const static uint8_t CHIP8FONTSET[80] =
-    {
-        0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
-        0x20, 0x60, 0x20, 0x20, 0x70, // 1
-        0xF0, 0x10, 0xF0, 0x80, 0xF0, // 2
-        0xF0, 0x10, 0xF0, 0x10, 0xF0, // 3
-        0x90, 0x90, 0xF0, 0x10, 0x10, // 4
-        0xF0, 0x80, 0xF0, 0x10, 0xF0, // 5
-        0xF0, 0x80, 0xF0, 0x90, 0xF0, // 6
-        0xF0, 0x10, 0x20, 0x40, 0x40, // 7
-        0xF0, 0x90, 0xF0, 0x90, 0xF0, // 8
-        0xF0, 0x90, 0xF0, 0x10, 0xF0, // 9
-        0xF0, 0x90, 0xF0, 0x90, 0x90, // A
-        0xE0, 0x90, 0xE0, 0x90, 0xE0, // B
-        0xF0, 0x80, 0x80, 0x80, 0xF0, // C
-        0xE0, 0x90, 0x90, 0x90, 0xE0, // D
-        0xF0, 0x80, 0xF0, 0x80, 0xF0, // E
-        0xF0, 0x80, 0xF0, 0x80, 0x80  // F
-};
+        {
+                0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
+                0x20, 0x60, 0x20, 0x20, 0x70, // 1
+                0xF0, 0x10, 0xF0, 0x80, 0xF0, // 2
+                0xF0, 0x10, 0xF0, 0x10, 0xF0, // 3
+                0x90, 0x90, 0xF0, 0x10, 0x10, // 4
+                0xF0, 0x80, 0xF0, 0x10, 0xF0, // 5
+                0xF0, 0x80, 0xF0, 0x90, 0xF0, // 6
+                0xF0, 0x10, 0x20, 0x40, 0x40, // 7
+                0xF0, 0x90, 0xF0, 0x90, 0xF0, // 8
+                0xF0, 0x90, 0xF0, 0x10, 0xF0, // 9
+                0xF0, 0x90, 0xF0, 0x90, 0x90, // A
+                0xE0, 0x90, 0xE0, 0x90, 0xE0, // B
+                0xF0, 0x80, 0x80, 0x80, 0xF0, // C
+                0xE0, 0x90, 0x90, 0x90, 0xE0, // D
+                0xF0, 0x80, 0xF0, 0x80, 0xF0, // E
+                0xF0, 0x80, 0xF0, 0x80, 0x80  // F
+        };
 
 struct Instruction {
     uint16_t opcode;
@@ -56,9 +56,9 @@ public:
     }
 };
 
-class Chip8Interpreter: public QThread
-{
-    Q_OBJECT
+class Chip8Interpreter : public QThread {
+Q_OBJECT
+
 public:
     const static int screenWidth{64};
     const static int screenHeight{32};
@@ -91,6 +91,7 @@ public:
     std::array<std::array<bool, screenWidth>, screenHeight> BUFFER{};
 
 signals:
+
     // coordinate description
     // +----------> y
     // |
@@ -98,10 +99,13 @@ signals:
     // |
     // x
     void draw(std::array<std::array<bool, screenWidth>, screenHeight> buffer);
+
     void beep(int milliseconds);
 
 public slots:
+
     void KeyDown(int key);
+
     void KeyUp(int key);
 
 public:
@@ -109,53 +113,91 @@ public:
 
 private:
     uint tickInterval{10};
-    QTimer* timer;
+    QTimer *timer;
     uint64_t time{0};
     bool drawFlag{true};
 
 public:
-    explicit Chip8Interpreter(QObject* parent=nullptr);
+    explicit Chip8Interpreter(QObject *parent = nullptr);
 
     void Load(std::string file);
+
     // translate opcode into Instruction object.
     std::shared_ptr<Instruction> ParseInstruction(uint16_t opcode);
+
     void Tick();
+
     void Push(uint16_t opcode);
+
     uint16_t Pop();
+
     // implement instructions
     void CLS(std::shared_ptr<Instruction> ins);
+
     void RET(std::shared_ptr<Instruction> ins);
+
     void JP_Addr(std::shared_ptr<Instruction> ins);
+
     void CALL_Addr(std::shared_ptr<Instruction> ins);
+
     void SE_Vx_Byte(std::shared_ptr<Instruction> ins);
+
     void SNE_Vx_Byte(std::shared_ptr<Instruction> ins);
+
     void SE_Vx_Vy(std::shared_ptr<Instruction> ins);
+
     void LD_Vx_Byte(std::shared_ptr<Instruction> ins);
+
     void ADD_Vx_Byte(std::shared_ptr<Instruction> ins);
+
     void LD_Vx_Vy(std::shared_ptr<Instruction> ins);
+
     void OR_Vx_Vy(std::shared_ptr<Instruction> ins);
+
     void AND_Vx_Vy(std::shared_ptr<Instruction> ins);
+
     void XOR_Vx_Vy(std::shared_ptr<Instruction> ins);
+
     void ADD_Vx_Vy(std::shared_ptr<Instruction> ins);
+
     void SUB_Vx_Vy(std::shared_ptr<Instruction> ins);
+
     void SHR_Vx_iVy(std::shared_ptr<Instruction> ins);
+
     void SUBN_Vx_Vy(std::shared_ptr<Instruction> ins);
+
     void SHL_Vx_iVy(std::shared_ptr<Instruction> ins);
+
     void SNE_Vx_Vy(std::shared_ptr<Instruction> ins);
+
     void LD_I_Addr(std::shared_ptr<Instruction> ins);
+
     void JP_V0_Addr(std::shared_ptr<Instruction> ins);
+
     void RND_Vx_KK(std::shared_ptr<Instruction> ins);
+
     void DRW_Vx_Vy_N(std::shared_ptr<Instruction> ins);
+
     void SKP_Vx(std::shared_ptr<Instruction> ins);
+
     void SKNP_Vx(std::shared_ptr<Instruction> ins);
+
     void LD_Vx_DT(std::shared_ptr<Instruction> ins);
+
     void LD_Vx_K(std::shared_ptr<Instruction> ins);
+
     void LD_DT_Vx(std::shared_ptr<Instruction> ins);
+
     void LD_ST_Vx(std::shared_ptr<Instruction> ins);
+
     void ADD_I_Vx(std::shared_ptr<Instruction> ins);
+
     void LD_F_Vx(std::shared_ptr<Instruction> ins);
+
     void LD_B_Vx(std::shared_ptr<Instruction> ins);
+
     void LD_I_Vx(std::shared_ptr<Instruction> ins);
+
     void LD_Vx_I(std::shared_ptr<Instruction> ins);
 };
 
