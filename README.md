@@ -50,7 +50,7 @@ CHIP-8是一种解释型汇编语言，由Joseph Weisbecker在他的1802微处�
 
 #### 操作码
 
-###### NOTE：摘自《Cowgod's CHIP-8 Technical Reference》，懒得翻译了。
+###### NOTE：摘自《Cowgod's CHIP-8 Technical Reference》，哥们儿营养跟不上，懒得翻译了。
 
 ##### 0nnn - SYS addr
 
