@@ -112,7 +112,7 @@ public:
     void run() override;
 
 private:
-    uint tickInterval{10};
+    int tickInterval{10};
     QTimer *timer;
     uint64_t time{0};
     bool drawFlag{true};

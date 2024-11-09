@@ -147,7 +147,7 @@ void Chip8Interpreter::run() {
     exec();
 }
 
-bool Chip8Interpreter::Load(const std::string& file) {
+bool Chip8Interpreter::Load(const std::string &file) {
     std::ifstream stream(file, std::ios::binary | std::ios::in);
     if (!stream.is_open()) {
         return false;
@@ -177,7 +177,7 @@ void Chip8Interpreter::Tick() {
     // read 2 bytes opcode (big endian).
     uint16_t opcode = RAM[PC] << 8 | RAM[PC + 1];
 
-    std::cout << QString("PC: %1, opcode: %2").arg(ToHex(PC), ToHex(opcode)).toStdString() << std::endl;
+//    std::cout << QString("PC: %1, opcode: %2").arg(ToHex(PC), ToHex(opcode)).toStdString() << std::endl;
 
     auto ins = ParseInstruction(opcode);
     int op = opcode >> 12;
@@ -191,10 +191,8 @@ void Chip8Interpreter::Tick() {
             DT--;
         }
         if (ST > 0) {
-            ST--;
-            if (ST == 0) {
-                emit beep(100);
-            }
+            emit beep(ST * 20);
+            ST = 0;
         }
         if (drawFlag) {
             emit draw(BUFFER);
